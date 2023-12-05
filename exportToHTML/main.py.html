@@ -1,0 +1,203 @@
+<html>
+<head>
+<title>main.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #7a7e85;}
+.s4 { color: #6aab73;}
+.s5 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+main.py</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">csv</span>
+<span class="s0">import </span><span class="s1">requests</span>
+<span class="s0">from </span><span class="s1">bs4 </span><span class="s0">import </span><span class="s1">BeautifulSoup</span>
+<span class="s0">from </span><span class="s1">urllib</span><span class="s2">.</span><span class="s1">parse </span><span class="s0">import </span><span class="s1">urlparse</span><span class="s2">, </span><span class="s1">urljoin</span>
+
+
+<span class="s3"># # Etape 1 : Saisie du texte</span>
+<span class="s3"># def saisie_texte_utilisateur():</span>
+<span class="s3">#     texte_utilisateur = input(&quot;Entrer du texte : &quot;)</span>
+<span class="s3">#     return texte_utilisateur</span>
+<span class="s3">#</span>
+<span class="s3"># texte_saisi = saisie_texte_utilisateur()</span>
+<span class="s3">#</span>
+<span class="s3"># def occurrence_mots(texte):</span>
+<span class="s3">#     mots = texte.split()</span>
+<span class="s3">#     dictionnaire_occurrences = {}</span>
+<span class="s3">#     for mot in mots:</span>
+<span class="s3">#         mot = mot.lower()</span>
+<span class="s3">#         if mot in dictionnaire_occurrences:</span>
+<span class="s3">#             dictionnaire_occurrences[mot] += 1</span>
+<span class="s3">#         else:</span>
+<span class="s3">#             dictionnaire_occurrences[mot] = 1</span>
+<span class="s3">#     liste_triee = sorted(dictionnaire_occurrences.items(), key=lambda x: x[1], reverse=True)</span>
+<span class="s3">#     return liste_triee</span>
+<span class="s3">#</span>
+<span class="s3"># resultat_occurrence_mots = occurrence_mots(texte_saisi)</span>
+<span class="s3"># # print(resultat_occurrence_mots)</span>
+<span class="s3">#</span>
+<span class="s3">#</span>
+<span class="s3">#</span>
+<span class="s3"># # Etape 2 : Suppression des Mots Parasites</span>
+<span class="s3"># def supprimer_mots_parasites(occurrences, mots_parasites):</span>
+<span class="s3">#     texte_filtre = [item for item in occurrences if item[0] not in mots_parasites]</span>
+<span class="s3">#     return texte_filtre</span>
+<span class="s3">#</span>
+<span class="s3"># liste_mots_parasites = ['le', 'la', 'les', 'un', 'une', 'des', 'du', 'de', 'en', 'à', 'avec', 'sur', 'sous', 'par', 'pour', 'et', 'ou', 'car', 'donc', 'mais', 'si', 'que', 'qui', 'quoi', 'où', 'comment', 'quand', 'pourquoi', 'combien', 'cela']</span>
+<span class="s3"># resultat_filtre = supprimer_mots_parasites(resultat_occurrence_mots, liste_mots_parasites)</span>
+<span class="s3"># # print(resultat_filtre)</span>
+<span class="s3">#</span>
+<span class="s3">#</span>
+<span class="s3">#</span>
+<span class="s3"># # Etape 3 : Récupération des mots parasites depuis un fichier CSV</span>
+<span class="s3"># def recuperer_mots_parasites_depuis_csv(parasite):</span>
+<span class="s3">#     mots_parasites = []</span>
+<span class="s3">#     with open(parasite, newline='') as csvfile:</span>
+<span class="s3">#         lecteur_csv = csv.reader(csvfile)</span>
+<span class="s3">#         for ligne in lecteur_csv:</span>
+<span class="s3">#             mots_parasites.extend(ligne)</span>
+<span class="s3">#     return mots_parasites</span>
+<span class="s3">#</span>
+<span class="s3"># nom_fichier = 'parasite.csv'</span>
+<span class="s3"># mots_parasites = recuperer_mots_parasites_depuis_csv(nom_fichier)</span>
+<span class="s3">#</span>
+<span class="s3">#</span>
+<span class="s3">#</span>
+<span class="s3"># # # Etape 4 : Appelez les fonctions</span>
+<span class="s3">#</span>
+<span class="s3"># # Etape 1</span>
+<span class="s3"># resultat_etape1 = occurrence_mots(texte_saisi)</span>
+<span class="s3"># print(&quot;\n-----------Etape 1:-----------&quot;)</span>
+<span class="s3"># print(resultat_etape1)</span>
+<span class="s3">#</span>
+<span class="s3"># # Etape 3</span>
+<span class="s3"># resultat_etape3 = recuperer_mots_parasites_depuis_csv(nom_fichier)</span>
+<span class="s3"># print(&quot;\n-----------Etape 3:-----------&quot;)</span>
+<span class="s3"># print(resultat_etape3)</span>
+<span class="s3">#</span>
+<span class="s3"># # Etape 2</span>
+<span class="s3"># resultat_etape2 = supprimer_mots_parasites(resultat_etape1, resultat_etape3)</span>
+<span class="s3"># print(&quot;\n-----------Etape 2:-----------&quot;)</span>
+<span class="s3"># print(resultat_etape2)</span>
+
+
+
+<span class="s3"># Etape 5 : Suppression des balises HTML</span>
+<span class="s0">def </span><span class="s1">supprimer_balises_html</span><span class="s2">(</span><span class="s1">texte_html</span><span class="s2">):</span>
+    <span class="s1">soup </span><span class="s2">= </span><span class="s1">BeautifulSoup</span><span class="s2">(</span><span class="s1">texte_html</span><span class="s2">, </span><span class="s4">'html.parser'</span><span class="s2">)</span>
+    <span class="s1">texte_sans_balises </span><span class="s2">= </span><span class="s1">soup</span><span class="s2">.</span><span class="s1">get_text</span><span class="s2">()</span>
+    <span class="s0">return </span><span class="s1">texte_sans_balises</span>
+
+<span class="s3"># # print(&quot;\n-----------Etape 5:-----------&quot;)</span>
+<span class="s3"># html_texte = input(&quot;Entrer chaine HTML : &quot;)</span>
+<span class="s3"># texte_sans_balises = supprimer_balises_html(html_texte)</span>
+<span class="s3"># # print(texte_sans_balises)</span>
+
+
+
+<span class="s3"># Etape 6 : Récupération des valeurs des attributs</span>
+<span class="s0">def </span><span class="s1">obtenir_valeurs_attributs</span><span class="s2">(</span><span class="s1">contenu_html</span><span class="s2">, </span><span class="s1">nom_tag</span><span class="s2">, </span><span class="s1">nom_attribut</span><span class="s2">):</span>
+    <span class="s1">soup </span><span class="s2">= </span><span class="s1">BeautifulSoup</span><span class="s2">(</span><span class="s1">contenu_html</span><span class="s2">, </span><span class="s4">'html.parser'</span><span class="s2">)</span>
+    <span class="s1">valeurs_tag </span><span class="s2">= []</span>
+    <span class="s0">for </span><span class="s1">tag </span><span class="s0">in </span><span class="s1">soup</span><span class="s2">.</span><span class="s1">find_all</span><span class="s2">(</span><span class="s1">nom_tag</span><span class="s2">):</span>
+        <span class="s0">if </span><span class="s1">tag</span><span class="s2">.</span><span class="s1">has_attr</span><span class="s2">(</span><span class="s1">nom_attribut</span><span class="s2">):</span>
+            <span class="s1">valeurs_tag</span><span class="s2">.</span><span class="s1">append</span><span class="s2">(</span><span class="s1">tag</span><span class="s2">[</span><span class="s1">nom_attribut</span><span class="s2">])</span>
+    <span class="s0">return </span><span class="s1">valeurs_tag</span>
+
+
+<span class="s3"># Etape 8 : Extraction du nom de domaine</span>
+<span class="s0">def </span><span class="s1">extraire_domaine_de_url</span><span class="s2">(</span><span class="s1">url</span><span class="s2">):</span>
+    <span class="s1">url_analysé </span><span class="s2">= </span><span class="s1">urlparse</span><span class="s2">(</span><span class="s1">url</span><span class="s2">)</span>
+    <span class="s0">return </span><span class="s1">url_analysé</span><span class="s2">.</span><span class="s1">netloc</span>
+
+
+
+<span class="s3"># Etape 9 : Filtrage des URLs par domaine</span>
+<span class="s0">def </span><span class="s1">filtrer_urls_par_domaine</span><span class="s2">(</span><span class="s1">nom_domaine</span><span class="s2">, </span><span class="s1">liste_urls</span><span class="s2">):</span>
+    <span class="s1">domaine_urls </span><span class="s2">= []</span>
+    <span class="s1">autres_urls </span><span class="s2">= []</span>
+
+    <span class="s0">for </span><span class="s1">url </span><span class="s0">in </span><span class="s1">liste_urls</span><span class="s2">:</span>
+        <span class="s0">if </span><span class="s1">extraire_domaine_de_url</span><span class="s2">(</span><span class="s1">url</span><span class="s2">) == </span><span class="s1">nom_domaine</span><span class="s2">:</span>
+            <span class="s1">domaine_urls</span><span class="s2">.</span><span class="s1">append</span><span class="s2">(</span><span class="s1">url</span><span class="s2">)</span>
+        <span class="s0">else</span><span class="s2">:</span>
+            <span class="s1">autres_urls</span><span class="s2">.</span><span class="s1">append</span><span class="s2">(</span><span class="s1">url</span><span class="s2">)</span>
+
+    <span class="s0">return </span><span class="s1">domaine_urls</span><span class="s2">, </span><span class="s1">autres_urls</span>
+
+
+
+<span class="s3"># Etape 10 : Récupération du contenu HTML depuis une URL</span>
+<span class="s0">def </span><span class="s1">obtenir_contenu_html</span><span class="s2">(</span><span class="s1">url</span><span class="s2">):</span>
+    <span class="s1">réponse </span><span class="s2">= </span><span class="s1">requests</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s1">url</span><span class="s2">)</span>
+    <span class="s0">return </span><span class="s1">réponse</span><span class="s2">.</span><span class="s1">text</span>
+
+
+
+<span class="s3"># Etape 11 : Audit SEO</span>
+<span class="s0">def </span><span class="s1">audit_seo</span><span class="s2">(</span><span class="s1">url</span><span class="s2">):</span>
+    <span class="s3"># Etape 10</span>
+    <span class="s1">contenu_html </span><span class="s2">= </span><span class="s1">obtenir_contenu_html</span><span class="s2">(</span><span class="s1">url</span><span class="s2">)</span>
+
+    <span class="s3"># Etape 6</span>
+    <span class="s1">valeurs_alt </span><span class="s2">= </span><span class="s1">obtenir_valeurs_attributs</span><span class="s2">(</span><span class="s1">contenu_html</span><span class="s2">, </span><span class="s4">'img'</span><span class="s2">, </span><span class="s4">'alt'</span><span class="s2">)</span>
+    <span class="s1">valeurs_href </span><span class="s2">= </span><span class="s1">obtenir_valeurs_attributs</span><span class="s2">(</span><span class="s1">contenu_html</span><span class="s2">, </span><span class="s4">'a'</span><span class="s2">, </span><span class="s4">'href'</span><span class="s2">)</span>
+
+    <span class="s3"># # # Etape 7</span>
+    <span class="s3"># print(&quot;\nValeurs Alt pour les balises img:&quot;, valeurs_alt)</span>
+    <span class="s3"># print(&quot;Valeurs Href pour les balises a:&quot;, valeurs_href)</span>
+
+    <span class="s3"># Etape 8</span>
+    <span class="s1">domaine </span><span class="s2">= </span><span class="s1">extraire_domaine_de_url</span><span class="s2">(</span><span class="s1">url</span><span class="s2">)</span>
+
+    <span class="s3"># Etape 9</span>
+    <span class="s1">domaine_urls</span><span class="s2">, </span><span class="s1">autres_urls </span><span class="s2">= </span><span class="s1">filtrer_urls_par_domaine</span><span class="s2">(</span><span class="s1">domaine</span><span class="s2">, </span><span class="s1">valeurs_href</span><span class="s2">)</span>
+
+    <span class="s3"># Etape 11</span>
+    <span class="s1">print</span><span class="s2">(</span><span class="s4">&quot;-----------Debut de l'audit-----------&quot;</span><span class="s2">)</span>
+    <span class="s1">print</span><span class="s2">(</span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">Résultats de l'audit SEO pour :&quot;</span><span class="s2">, </span><span class="s1">url</span><span class="s2">)</span>
+    <span class="s1">print</span><span class="s2">(</span><span class="s4">&quot;&quot;</span><span class="s2">)</span>
+    <span class="s1">print</span><span class="s2">(</span><span class="s4">&quot;Domaine:&quot;</span><span class="s2">, </span><span class="s1">domaine</span><span class="s2">)</span>
+    <span class="s1">print</span><span class="s2">(</span><span class="s4">&quot;&quot;</span><span class="s2">)</span>
+    <span class="s1">print</span><span class="s2">(</span><span class="s4">&quot;Valeurs Alt pour les balises img:&quot;</span><span class="s2">, </span><span class="s1">valeurs_alt</span><span class="s2">)</span>
+    <span class="s1">print</span><span class="s2">(</span><span class="s4">&quot;Nombre de liens entrants:&quot;</span><span class="s2">, </span><span class="s1">len</span><span class="s2">(</span><span class="s1">domaine_urls</span><span class="s2">))</span>
+    <span class="s1">print</span><span class="s2">(</span><span class="s4">&quot;Liens entrants:&quot;</span><span class="s2">, </span><span class="s1">domaine_urls</span><span class="s2">)</span>
+    <span class="s1">print</span><span class="s2">(</span><span class="s4">&quot;Nombre de liens sortants:&quot;</span><span class="s2">, </span><span class="s1">len</span><span class="s2">(</span><span class="s1">autres_urls</span><span class="s2">))</span>
+    <span class="s1">print</span><span class="s2">(</span><span class="s4">&quot;Liens sortants:&quot;</span><span class="s2">, </span><span class="s1">autres_urls</span><span class="s2">)</span>
+
+    <span class="s1">print</span><span class="s2">(</span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">Mots clé et leurs occurrences:&quot;</span><span class="s2">)</span>
+
+    <span class="s3"># Nombre d'occurrences de chaque mot dans le contenu HTML</span>
+    <span class="s1">Nombre_de_mots </span><span class="s2">= {}</span>
+    <span class="s0">for </span><span class="s1">mots </span><span class="s0">in </span><span class="s1">contenu_html</span><span class="s2">.</span><span class="s1">split</span><span class="s2">():</span>
+        <span class="s1">mots </span><span class="s2">= </span><span class="s1">mots</span><span class="s2">.</span><span class="s1">lower</span><span class="s2">()</span>
+        <span class="s0">if </span><span class="s1">mots</span><span class="s2">.</span><span class="s1">isalpha</span><span class="s2">() </span><span class="s0">and </span><span class="s1">len</span><span class="s2">(</span><span class="s1">mots</span><span class="s2">) &gt; </span><span class="s5">2</span><span class="s2">:</span>
+            <span class="s0">if </span><span class="s1">mots </span><span class="s0">in </span><span class="s1">Nombre_de_mots</span><span class="s2">:</span>
+                <span class="s1">Nombre_de_mots</span><span class="s2">[</span><span class="s1">mots</span><span class="s2">] += </span><span class="s5">1</span>
+            <span class="s0">else</span><span class="s2">:</span>
+                <span class="s1">Nombre_de_mots</span><span class="s2">[</span><span class="s1">mots</span><span class="s2">] = </span><span class="s5">1</span>
+
+    <span class="s3"># Affichage des 3 premières valeurs d’occurrences</span>
+    <span class="s1">Nombre_de_mots_Trié </span><span class="s2">= </span><span class="s1">sorted</span><span class="s2">(</span><span class="s1">Nombre_de_mots</span><span class="s2">.</span><span class="s1">items</span><span class="s2">(), </span><span class="s1">key</span><span class="s2">=</span><span class="s0">lambda </span><span class="s1">x</span><span class="s2">: </span><span class="s1">x</span><span class="s2">[</span><span class="s5">1</span><span class="s2">], </span><span class="s1">reverse</span><span class="s2">=</span><span class="s0">True</span><span class="s2">)</span>
+    <span class="s0">for </span><span class="s1">i </span><span class="s0">in </span><span class="s1">range</span><span class="s2">(</span><span class="s5">3</span><span class="s2">):</span>
+        <span class="s0">if </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">len</span><span class="s2">(</span><span class="s1">Nombre_de_mots_Trié</span><span class="s2">):</span>
+            <span class="s1">print</span><span class="s2">(</span><span class="s4">f&quot;</span><span class="s0">{</span><span class="s1">Nombre_de_mots_Trié</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s5">0</span><span class="s2">]</span><span class="s0">}</span><span class="s4">: </span><span class="s0">{</span><span class="s1">Nombre_de_mots_Trié</span><span class="s2">[</span><span class="s1">i</span><span class="s2">][</span><span class="s5">1</span><span class="s2">]</span><span class="s0">} </span><span class="s4">occurrences&quot;</span><span class="s2">)</span>
+
+
+<span class="s3"># Audit SEO avec une URL spécifique</span>
+<span class="s1">url_à_auditer </span><span class="s2">= </span><span class="s1">input</span><span class="s2">(</span><span class="s4">&quot;Entrez l'URL de la page à analyser : &quot;</span><span class="s2">)</span>
+<span class="s1">audit_seo</span><span class="s2">(</span><span class="s1">url_à_auditer</span><span class="s2">)</span>
+
+<span class="s1">print</span><span class="s2">(</span><span class="s4">&quot;&quot;</span><span class="s2">)</span>
+<span class="s1">print</span><span class="s2">(</span><span class="s4">&quot;-----------Fin de l'audit-----------&quot;</span><span class="s2">)</span></pre>
+</body>
+</html>
